@@ -1,8 +1,15 @@
+/* 
+    pokemon.java
+    Author: Zhiyang Chen
+    Teacher: Mr Ho
+    Date: April 29, 2020
+    Assignment: Pokemon Virtual Assignment
+*/
+
 import java.util.Scanner; 
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 
 class pokemon2 {
     public static void main(String[] args) {
@@ -31,14 +38,14 @@ class pokemon2 {
         String playerAttacks[];
         int playerHealth2;
         // Health for each pokemon in order (Charmander, Squirtle, Bulbasaur)
-        int[] playerHealth = {1, 2, 3};
+        int[] playerHealth = {16, 16, 16};
 
         // Variables for the Bot
         String botStarter;
         String botAttacks[];
         int botHealth2;
         // Health for each pokemon in order (Charmander, Squirtle, Bulbasaur)
-        int[] botHealth = {16, 16, 16};
+        int[] botHealth = {1, 1, 1};
 
         // Health bar and attack damage
         String HP = "";
@@ -172,6 +179,12 @@ class pokemon2 {
                 // Sees if they choose to Fight or Swap Pokemon
                 String choice2 = myScan.nextLine();
 
+                // If they Pokemon they are currently using has fainted, it makes it so they can only swap pokemon
+                if (playerHealth2 <= 0) {
+                    System.out.println(playerStarter + " is unable to fight, select a new pokemon");
+                    choice2 = "swap pokemon";
+                }
+
                 // If they fight
                 if (choice2.equalsIgnoreCase("Fight")) {
                     System.out.println("");
@@ -207,22 +220,18 @@ class pokemon2 {
                             System.out.println(playerStarter + " used " + playerAttacks[0] + "!");
                             break;
                         }
-
                         else if (attackChoice.equalsIgnoreCase(playerAttacks[1])) {
                             System.out.println(playerStarter + " used " + playerAttacks[1] + "!");
                             break;
                         }
-
                         else if (attackChoice.equalsIgnoreCase(playerAttacks[2])) {
                             System.out.println(playerStarter + " used " + playerAttacks[2] + "!");
                             break;
                         }
-
                         else if (attackChoice.equalsIgnoreCase(playerAttacks[3])) {
                             System.out.println(playerStarter + " used " + playerAttacks[3] + "!");
                             break;
                         }
-
                         else {
                             System.out.println("Invalid choice, please try again");
                         }
@@ -242,7 +251,7 @@ class pokemon2 {
                     // Displays how much damage the users attack has done
                     botHealth2 = botHealth2 - attackDamage;
                     System.out.println("It did " + attackDamage + " damage!");
-                    if (playerHealth2 <= 0) {
+                    if (botHealth2 <= 0) {
                         System.out.println("Misty's " + botStarter + " has fainted");
                     }
                     else {
@@ -273,12 +282,15 @@ class pokemon2 {
                         // Checks if the Pokemon still has health
                         else if (switchChoice.equalsIgnoreCase(pokemon[0]) && playerHealth[0] <= 0){
                             System.out.println(pokemon[0] + " has fainted, please try another pokemon");
+                            System.out.println("");
                         }
                         else if (switchChoice.equalsIgnoreCase(pokemon[1]) && playerHealth[1] <= 0){
                             System.out.println(pokemon[0] + " has fainted, please try another pokemon");
+                            System.out.println("");
                         }
                         else if (switchChoice.equalsIgnoreCase(pokemon[2]) && playerHealth[2] <= 0){
                             System.out.println(pokemon[0] + " has fainted, please try another pokemon");
+                            System.out.println("");
                         }
                         // Checks that what they type is actually a pokemon
                         else if (!switchChoice.equalsIgnoreCase(pokemon[0]) && !switchChoice.equalsIgnoreCase(pokemon[1]) && !switchChoice.equalsIgnoreCase(pokemon[2])) {
@@ -302,18 +314,8 @@ class pokemon2 {
                         switchChoice2 = myScan.nextLine();               
                         switchChoice2 = switchChoice2.toUpperCase();       
 
-                        // Checks that the pokemon chosen is not the same as the one they have
-                        if (switchChoice2.equalsIgnoreCase(switchChoice)) {
-                            System.out.println("");
-                            System.out.println("Invalid choice, please try again");
-                        }
-                        // Checks that what the user is writing is actually a pokemon 
-                        else if (!switchChoice2.equalsIgnoreCase(pokemon[0]) && !switchChoice2.equalsIgnoreCase(pokemon[1]) && !switchChoice2.equalsIgnoreCase(pokemon[2])){
-                            System.out.println("");
-                            System.out.println("Invalid choice, please try again");
-                        }
                         // Checks if the Pokemon still has health
-                        else if (switchChoice2.equalsIgnoreCase(pokemon[0]) && playerHealth[0] <= 0){
+                        if (switchChoice2.equalsIgnoreCase(pokemon[0]) && playerHealth[0] <= 0){
                             System.out.println(pokemon[0] + " has fainted, please try another pokemon");
                         }
                         else if (switchChoice2.equalsIgnoreCase(pokemon[1]) && playerHealth[1] <= 0){
@@ -321,6 +323,11 @@ class pokemon2 {
                         }
                         else if (switchChoice2.equalsIgnoreCase(pokemon[2]) && playerHealth[2] <= 0){
                             System.out.println(pokemon[0] + " has fainted, please try another pokemon");
+                        }
+                        // Checks that what the user is writing is actually a pokemon 
+                        else if (!switchChoice2.equalsIgnoreCase(pokemon[0]) && !switchChoice2.equalsIgnoreCase(pokemon[1]) && !switchChoice2.equalsIgnoreCase(pokemon[2])){
+                            System.out.println("");
+                            System.out.println("Invalid choice, please try again");
                         }
                         // If it meets these requirements, it will break the loop and continue 
                         else {
@@ -412,35 +419,45 @@ class pokemon2 {
                     System.out.println(name + " has sent out " + playerStarter);
                     botSwitch = true;
 
-                    // Used so bot switches pokemon aswell // Detects if user has switched pokemon and does the same
-                    if (botSwitch = true) {
-                        int num2 = rand.nextInt(3);
+                    // Detects if user has switched pokemon and does the same (Has to have health)
+                    while (true) {
+                        if (botSwitch = true); {
+                            int num2 = rand.nextInt(3);
 
-                        // Charmander
-                        if (num2 == 0) {
-                            botStarter = pokemon[0];
-                            botHealth2 = botHealth[0];
-                            botAttacks = new String[]{"Slash", "Dragon Breath", "Fire Spin", "Inferno"};
-                        }
-                        // Squirtle
-                        else if (num2 == 1) {
-                            botStarter = pokemon[1];
-                            botHealth2 = botHealth[1];
-                            botAttacks = new String[]{"Tackle", "Bubble", "Water Pulse", "Aqua Tail"};
-                        }
-                        // Bulbasaur
-                        else {
-                            botStarter = pokemon[2];
-                            botHealth2 = botHealth[2];
-                            botAttacks = new String[]{"Tackle", "Sludge Bomb", "Seed Bomb", "Vine Whip"};
-                        }
-                        System.out.println("");
-                        System.out.println("Misty has sent out " + botStarter);
+                            // Charmander
+                            if (num2 == 0 && botHealth[0] > 0) {
+                                botStarter = pokemon[0];
+                                botHealth2 = botHealth[0];
+                                botAttacks = new String[]{"Slash", "Dragon Breath", "Fire Spin", "Inferno"};
+                                botSwitch = false;
+                            }
+                            // Squirtle
+                            else if (num2 == 1 && botHealth[1] > 0) {
+                                botStarter = pokemon[1];
+                                botHealth2 = botHealth[1];
+                                botAttacks = new String[]{"Tackle", "Bubble", "Water Pulse", "Aqua Tail"};
+                                botSwitch = false;
+                            }
+                            // Bulbasaur
+                            else if (num2 == 2 && botHealth[2] > 0){
+                                botStarter = pokemon[2];
+                                botHealth2 = botHealth[2];
+                                botAttacks = new String[]{"Tackle", "Sludge Bomb", "Seed Bomb", "Vine Whip"};
+                                botSwitch = false;
+                            }
+                            // If all the bots pokemon are dead
+                            else if (botHealth[0] <= 0 && botHealth[1] <= 0 && botHealth[2] <= 0) {
+                                botSwitch = false;
+                            }
+                            // Finds another pokemon to switch it too
+                            else {
+                                num2 = rand.nextInt(3);
+                            }
+                            System.out.println("");
+                            System.out.println("Misty has sent out " + botStarter);
+                        } 
+                        break;
                     }
-                    else {
-                        continue;
-                    }
-                    break;
                 }
 
                 // Integrity
@@ -449,64 +466,96 @@ class pokemon2 {
                 }
             }
 
-            // Mistys turn
-            System.out.println("");
-            System.out.println("Misty's Turn");
-            System.out.println("");
+            // If Misty's Pokemon still has health
+            if (botHealth2 > 0) {
+                // Mistys turn
+                System.out.println("");
+                System.out.println("Misty's Turn");
+                System.out.println("");
 
-            // Prints out Misty's pokemons new health
-            HP = "";
-            for (int i = 0; i < botHealth2; i++) {
-                HP = HP + "=";
-            }
-            System.out.println(botStarter + "\t Lvl 69");
-            System.out.println("\t HP [" + HP + "]");
+                // Prints out Misty's pokemons new health
+                HP = "";
+                for (int i = 0; i < botHealth2; i++) {
+                    HP = HP + "=";
+                }
+                System.out.println(botStarter + "\t Lvl 69");
+                System.out.println("\t HP [" + HP + "]");
+                System.out.println("");
 
-            // Lists out the attacks
-            System.out.println("");
-            System.out.println("1. " + botAttacks[0]);
-            System.out.println("2. " + botAttacks[1]);
-            System.out.println("3. " + botAttacks[2]);
-            System.out.println("4. " + botAttacks[3]);
-            System.out.println("");
+                // Bot chooses one random attack
+                int botChoice = rand.nextInt(4);
+                attackDamage = rand.nextInt(4) + 3;
 
-            // Bot chooses one random attack
-            int botChoice = rand.nextInt(4);
-            attackDamage = rand.nextInt(4) + 3;
+                if (botChoice == 0) {
+                    System.out.println(botStarter + " used " + botAttacks[0] + "!");
+                }
+                else if (botChoice == 1) {
+                    System.out.println(botStarter + " used " + botAttacks[1] + "!");
+                }
+                else if (botChoice == 2) {
+                    System.out.println(botStarter + " used " + botAttacks[2] + "!");
+                }
+                else {
+                    System.out.println(botStarter + " used " + botAttacks[3] + "!");
+                }
 
-            if (botChoice == 0) {
-                System.out.println(botStarter + " used " + botAttacks[0] + "!");
+                // Updates the Health variables
+                if (playerStarter.equalsIgnoreCase(pokemon[0])) {
+                    playerHealth[0] = playerHealth[0] - attackDamage;
+                }
+                else if (playerStarter.equalsIgnoreCase(pokemon[1])) {
+                    playerHealth[1] = playerHealth[1] - attackDamage;
+                }
+                else if (playerStarter.equalsIgnoreCase(pokemon[2])) {
+                    playerHealth[2] = playerHealth[2] - attackDamage;
+                }
+
+                // Displays how much damage the bot attack has done
+                playerHealth2 = playerHealth2 - attackDamage;
+                System.out.println("It did " + attackDamage + " damage!");
+                if (playerHealth2 <= 0) {
+                    System.out.println(name + "'s " + playerStarter + " has fainted");
+                }
+                else {
+                    System.out.println(name + "'s " + playerStarter + " only has " + playerHealth2 + "HP left.");
+                }
             }
-            else if (botChoice == 1) {
-                System.out.println(botStarter + " used " + botAttacks[1] + "!");
-            }
-            else if (botChoice == 2) {
-                System.out.println(botStarter + " used " + botAttacks[2] + "!");
-            }
+            // If it doesn't have health, it switches pokemon
             else {
-                System.out.println(botStarter + " used " + botAttacks[3] + "!");
-            }
-            System.out.println("");
-
-            // Updates the Health variables
-            if (playerStarter.equalsIgnoreCase(pokemon[0])) {
-                playerHealth[0] = playerHealth[0] - attackDamage;
-            }
-            else if (playerStarter.equalsIgnoreCase(pokemon[1])) {
-                playerHealth[1] = playerHealth[1] - attackDamage;
-            }
-            else if (playerStarter.equalsIgnoreCase(pokemon[2])) {
-                playerHealth[2] = playerHealth[2] - attackDamage;
-            }
-
-            // Displays how much damage the bot attack has done
-            playerHealth2 = playerHealth2 - attackDamage;
-            System.out.println("It did " + attackDamage + " damage!");
-            if (playerHealth2 <= 0) {
-                System.out.println(name + "'s " + playerStarter + " has fainted");
-            }
-            else {
-                System.out.println(name + "'s " + playerStarter + " only has " + playerHealth2 + "HP left.");
+                while (true) {
+                    int num2 = rand.nextInt(3);
+                    // Charmander
+                    if (num2 == 0 && botHealth[0] > 0) {
+                        botStarter = pokemon[0];
+                        botHealth2 = botHealth[0];
+                        botAttacks = new String[]{"Slash", "Dragon Breath", "Fire Spin", "Inferno"};
+                        break;
+                    }
+                    // Squirtle
+                    else if (num2 == 1 && botHealth[1] > 0) {
+                        botStarter = pokemon[1];
+                        botHealth2 = botHealth[1];
+                        botAttacks = new String[]{"Tackle", "Bubble", "Water Pulse", "Aqua Tail"};
+                        break;
+                    }
+                    // Bulbasaur
+                    else if (num2 == 2 && botHealth[2] > 0){
+                        botStarter = pokemon[2];
+                        botHealth2 = botHealth[2];
+                        botAttacks = new String[]{"Tackle", "Sludge Bomb", "Seed Bomb", "Vine Whip"};
+                        break;
+                    }
+                    // If all the bots pokemon are dead
+                    else if (botHealth[0] <= 0 && botHealth[1] <= 0 && botHealth[2] <= 0) {
+                        break;
+                    }
+                    // Finds another pokemon to switch it too
+                    else {
+                        num2 = rand.nextInt(3);
+                    }
+                    System.out.println("");
+                    System.out.println("Misty has sent out " + botStarter);
+                }
             }
         }
         myScan.close();
