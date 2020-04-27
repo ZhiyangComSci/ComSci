@@ -45,7 +45,7 @@ class pokemon2 {
         String botAttacks[];
         int botHealth2;
         // Health for each pokemon in order (Charmander, Squirtle, Bulbasaur)
-        int[] botHealth = {1, 1, 1};
+        int[] botHealth = {10, 10, 10};
 
         // Health bar and attack damage
         String HP = "";
@@ -421,43 +421,49 @@ class pokemon2 {
 
                     // Detects if user has switched pokemon and does the same (Has to have health)
                     while (true) {
-                        if (botSwitch = true); {
-                            int num2 = rand.nextInt(3);
+                        int num2 = rand.nextInt(3);
 
-                            // Charmander
-                            if (num2 == 0 && botHealth[0] > 0) {
-                                botStarter = pokemon[0];
-                                botHealth2 = botHealth[0];
-                                botAttacks = new String[]{"Slash", "Dragon Breath", "Fire Spin", "Inferno"};
-                                botSwitch = false;
-                            }
-                            // Squirtle
-                            else if (num2 == 1 && botHealth[1] > 0) {
-                                botStarter = pokemon[1];
-                                botHealth2 = botHealth[1];
-                                botAttacks = new String[]{"Tackle", "Bubble", "Water Pulse", "Aqua Tail"};
-                                botSwitch = false;
-                            }
-                            // Bulbasaur
-                            else if (num2 == 2 && botHealth[2] > 0){
-                                botStarter = pokemon[2];
-                                botHealth2 = botHealth[2];
-                                botAttacks = new String[]{"Tackle", "Sludge Bomb", "Seed Bomb", "Vine Whip"};
-                                botSwitch = false;
-                            }
-                            // If all the bots pokemon are dead
-                            else if (botHealth[0] <= 0 && botHealth[1] <= 0 && botHealth[2] <= 0) {
-                                botSwitch = false;
-                            }
-                            // Finds another pokemon to switch it too
-                            else {
-                                num2 = rand.nextInt(3);
-                            }
-                            System.out.println("");
-                            System.out.println("Misty has sent out " + botStarter);
-                        } 
-                        break;
+                        // Charmander
+                        if (num2 == 0 && botHealth[0] > 0) {
+                            botStarter = pokemon[0];
+                            botHealth2 = botHealth[0];
+                            botAttacks = new String[]{"Slash", "Dragon Breath", "Fire Spin", "Inferno"};
+                            break;
+                        }
+                        // Squirtle
+                        else if (num2 == 1 && botHealth[1] > 0) {
+                            botStarter = pokemon[1];
+                            botHealth2 = botHealth[1];
+                            botAttacks = new String[]{"Tackle", "Bubble", "Water Pulse", "Aqua Tail"};
+                            break;
+                        }
+                        // Bulbasaur
+                        else if (num2 == 2 && botHealth[2] > 0){
+                            botStarter = pokemon[2];
+                            botHealth2 = botHealth[2];
+                            botAttacks = new String[]{"Tackle", "Sludge Bomb", "Seed Bomb", "Vine Whip"};
+                            break;
+                        }
+                        // If all the bots pokemon are dead
+                        else if (botHealth[0] <= 0 && botHealth[1] <= 0 && botHealth[2] <= 0) {
+                            break;
+                        }
+                        // Finds another pokemon to switch it too
+                        else {
+                            num2 = rand.nextInt(3);
+                        }
                     }
+                    // Prints everything out
+                    System.out.println("Misty has sent out " + botStarter);
+                    System.out.println("");
+
+                    HP = "";
+                    // Prints out the health of the pokemon
+                    for (int i = 0; i < botHealth2; i++) {
+                        HP = HP + "=";
+                    }
+                    System.out.println(botStarter + "\t Lvl 69");
+                    System.out.println("\t HP [" + HP + "]");
                 }
 
                 // Integrity
@@ -467,7 +473,7 @@ class pokemon2 {
             }
 
             // If Misty's Pokemon still has health
-            if (botHealth2 > 0) {
+            if (botHealth2 >= 1) {
                 // Mistys turn
                 System.out.println("");
                 System.out.println("Misty's Turn");
@@ -524,6 +530,7 @@ class pokemon2 {
             else {
                 while (true) {
                     int num2 = rand.nextInt(3);
+
                     // Charmander
                     if (num2 == 0 && botHealth[0] > 0) {
                         botStarter = pokemon[0];
@@ -553,9 +560,18 @@ class pokemon2 {
                     else {
                         num2 = rand.nextInt(3);
                     }
-                    System.out.println("");
-                    System.out.println("Misty has sent out " + botStarter);
                 }
+                // Prints everything out
+                System.out.println("Misty has sent out " + botStarter);
+                System.out.println("");
+
+                HP = "";
+                // Prints out the health of the pokemon
+                for (int i = 0; i < botHealth2; i++) {
+                    HP = HP + "=";
+                }
+                System.out.println(botStarter + "\t Lvl 69");
+                System.out.println("\t HP [" + HP + "]");
             }
         }
         myScan.close();
