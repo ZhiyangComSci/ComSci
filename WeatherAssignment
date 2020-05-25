@@ -34,7 +34,7 @@ class weatherData {
                     // Prints out the Temperature
                     System.out.println("Temperature: " + mayTemps);
                 } catch (ArrayIndexOutOfBoundsException aioob) {
-                    aioob.printStackTrace();
+                    break;
                 }
                 
             }
