@@ -14,9 +14,19 @@ class weatherData {
             Scanner myScan = new Scanner(mayFile);
             // Gets rid of the first line 
             String data = myScan.nextLine();
-            // Variables for Calculating Average
-            Double avgMay = 0.0;
+
+            // Variables for the Month
+            Double avgMonthTemp = 0.0;
             Double numOfValues = 0.0;
+
+            // Variables for Days
+            Double avgDayTemp = 0.0;
+            Double numOfValues2 = 0.0;
+
+            // Variables for Day 1
+            int i = 1;
+            String dayOne = Integer.toString(i);
+
             // While the file still has data on it
             while (myScan.hasNext()) {
                 // Stores all the data in one line into the "data" variable
@@ -24,44 +34,77 @@ class weatherData {
                 try {
                     // Seperates the values based on columns (Backward quotes fixes the double quotes in string)
                     String[] values = data.split("\",\"");
-                    String value = values[9];
-                    // This converts the numbers from the String "values" into a double
-                    Double mayTemps = Double.parseDouble(value);
-                    // Adds up all the temperatures
-                    avgMay = avgMay + mayTemps;
-                    // Counter for how many temperatures there were
+                    // This is to split the space for Data/Time on the excel graph
+                    String[] dateTime = values[4].split(" ");
+
+                    // Finds all the Temperatures for the Month
+                    Double monthTemps = findTemp(data);
+                    avgMonthTemp = avgMonthTemp + monthTemps;
                     numOfValues++;
-                    // Prints out the Temperature
-                    System.out.println("Temperature: " + mayTemps);
+                    // System.out.println("Temperature: " + monthTemps);
+
+                    // Finds the Temperature Daily
+                    if (dateTime[0].equals("2020-05-0" + dayOne)) {
+                        Double temp = findTemp(data);
+
+                        avgDayTemp = avgDayTemp + temp;
+                        numOfValues2++;
+                    } 
+                    
+                // Removes the ArrayIndexOutOfBoundsException Error
                 } catch (ArrayIndexOutOfBoundsException aioob) {
                     break;
                 }
                 
             }
             myScan.close();
-            // Prints out the average temperature
-            System.out.println("Average Temperature = " + (avgMay / numOfValues));
+
+            // Prints out the Monthly Temperatures
+            averageTemp(avgMonthTemp, numOfValues, "Month");
+
+            // Prints out the Day 1 Temperatures
+            averageTemp(avgDayTemp, numOfValues2, "Day 1");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         
-
-        
-        
-
-
-
-
-
-        /*
-        String data = openFile("en_climate_hourly_ON_6158409_05-2020_P1H.csv");
-    
-        dataProcess(data);
-        dataOutput(data);
-        */
-
-
-
     }
+
+
+/*
+    if (dateTime[0].equals("2020-05-" + dayOne)) {
+        System.out.println(dayOneText);
+        String temperatureDay1 = values[9]; // Done
+
+        // This converts the temperature from the String "values" into a double
+        Double mayTemps2 = Double.parseDouble(temperatureDay1); // Done
+        // Adds up all the temperatures
+        avgMay2 = avgMay2 + mayTemps2;
+        // Counter for how many temperatures there were
+        numOfValues2++;
+        // Prints out the Temperature
+        System.out.println("Temperature Day 1: " + mayTemps2);
+    }
+*/
+
+    // This method finds the temperature and turns it from a String into a Double
+    public static Double findTemp(String a) {
+        String[] values = a.split("\",\"");
+        String stringTemp = values[9];
+        Double temp = Double.parseDouble(stringTemp);
+        return temp;
+    }
+
+    // This method is used to calculate the average Temperature
+    public static void averageTemp(double a, double b, String c) {
+        // Finds out the average temperature
+        Double monthlyTemp = a / b;
+        // Rounds the temperature up to the nearest integer
+        Double monthlyTempRounded = Math.ceil(monthlyTemp);
+        // Prints out the Temperature
+        System.out.println("Avg Temp " + "(" + c + ") = " + (monthlyTemp));
+        System.out.println("Avg Temp Rounded " + "(" + c + ") = " + (monthlyTempRounded));
+    }
+
 }
