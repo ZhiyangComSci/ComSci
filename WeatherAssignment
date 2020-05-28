@@ -15,17 +15,27 @@ class weatherData {
             // Gets rid of the first line 
             String data = myScan.nextLine();
 
+            // Variables for Maximum and Minimum Temperatures 
+            // Made these numbers huge as then it would 100% work all the time
+            Double maxTemp = -1000.0;
+            Double minTemp = 1000.0;
+
             // Variables for the Month
             Double avgMonthTemp = 0.0;
             Double numOfValues = 0.0;
 
             // Variables for Days
-            Double avgDayTemp = 0.0;
-            Double numOfValues2 = 0.0;
+            Double avgDayTemp1 = 0.0;
+            Double avgDayTemp2 = 0.0;
+            Double avgDayTemp3 = 0.0;
+            Double avgDayTemp4 = 0.0;
+            Double avgDayTemp5 = 0.0;
+            Double avgDayTemp6 = 0.0;
+            Double avgDayTemp7 = 0.0;
+            Double numOfValues2 = 24.0;
 
-            // Variables for Day 1
-            int i = 1;
-            String dayOne = Integer.toString(i);
+            // Counter for the amount of Days there are 
+            Double amountOfDays = 0.0;
 
             // While the file still has data on it
             while (myScan.hasNext()) {
@@ -43,13 +53,27 @@ class weatherData {
                     numOfValues++;
                     // System.out.println("Temperature: " + monthTemps);
 
-                    // Finds the Temperature Daily
-                    if (dateTime[0].equals("2020-05-0" + dayOne)) {
-                        Double temp = findTemp(data);
+                    // Counter for the amount of Days there are 
+                    amountOfDays++;
 
-                        avgDayTemp = avgDayTemp + temp;
-                        numOfValues2++;
-                    } 
+                    // Finds the Temperature Daily
+                    avgDayTemp1 = dailyTemperature(dateTime[0], "1", data, avgDayTemp1);
+                    avgDayTemp2 = dailyTemperature(dateTime[0], "2", data, avgDayTemp2);
+                    avgDayTemp3 = dailyTemperature(dateTime[0], "3", data, avgDayTemp3);
+                    avgDayTemp4 = dailyTemperature(dateTime[0], "4", data, avgDayTemp4);
+                    avgDayTemp5 = dailyTemperature(dateTime[0], "5", data, avgDayTemp5);
+                    avgDayTemp6 = dailyTemperature(dateTime[0], "6", data, avgDayTemp6);
+                    avgDayTemp7 = dailyTemperature(dateTime[0], "7", data, avgDayTemp7);
+
+                    // Finds out the Maximum and Minimum temperatures
+                    Double temperature = findTemp(data);
+
+                    if (temperature > maxTemp) {
+                        maxTemp = temperature;
+                    }
+                    if (temperature < minTemp) {
+                        minTemp = temperature;
+                    }
                     
                 // Removes the ArrayIndexOutOfBoundsException Error
                 } catch (ArrayIndexOutOfBoundsException aioob) {
@@ -59,34 +83,29 @@ class weatherData {
             }
             myScan.close();
 
+            // Prints out the Highest and Lowest Temperature
+            System.out.println("Max Temp is " + maxTemp + "°C");
+            System.out.println("Min Temp is " + minTemp + "°C");
+
             // Prints out the Monthly Temperatures
             averageTemp(avgMonthTemp, numOfValues, "Month");
 
-            // Prints out the Day 1 Temperatures
-            averageTemp(avgDayTemp, numOfValues2, "Day 1");
+            
+            // Prints out the Daily Temperatures
+            averageTemp(avgDayTemp1, numOfValues2, "Day 1");
+            averageTemp(avgDayTemp2, numOfValues2, "Day 2");
+            averageTemp(avgDayTemp3, numOfValues2, "Day 3");
+            averageTemp(avgDayTemp4, numOfValues2, "Day 4");
+            averageTemp(avgDayTemp5, numOfValues2, "Day 5");
+            averageTemp(avgDayTemp6, numOfValues2, "Day 6");
+            averageTemp(avgDayTemp7, numOfValues2, "Day 7");
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         
     }
-
-
-/*
-    if (dateTime[0].equals("2020-05-" + dayOne)) {
-        System.out.println(dayOneText);
-        String temperatureDay1 = values[9]; // Done
-
-        // This converts the temperature from the String "values" into a double
-        Double mayTemps2 = Double.parseDouble(temperatureDay1); // Done
-        // Adds up all the temperatures
-        avgMay2 = avgMay2 + mayTemps2;
-        // Counter for how many temperatures there were
-        numOfValues2++;
-        // Prints out the Temperature
-        System.out.println("Temperature Day 1: " + mayTemps2);
-    }
-*/
 
     // This method finds the temperature and turns it from a String into a Double
     public static Double findTemp(String a) {
@@ -103,8 +122,17 @@ class weatherData {
         // Rounds the temperature up to the nearest integer
         Double monthlyTempRounded = Math.ceil(monthlyTemp);
         // Prints out the Temperature
-        System.out.println("Avg Temp " + "(" + c + ") = " + (monthlyTemp));
-        System.out.println("Avg Temp Rounded " + "(" + c + ") = " + (monthlyTempRounded));
+        System.out.println("Avg Temp " + "(" + c + ") = " + (monthlyTemp) + "°C (" + monthlyTempRounded + "°C)");
+    }
+
+    // This method is used to find the temperature daily 
+    public static Double dailyTemperature(String a, String b, String c, Double d) {
+        if (a.equals("2020-05-0" + b)) {
+            Double temp = findTemp(c);
+            
+            d = d + temp;
+        } 
+        return d;
     }
 
 }
